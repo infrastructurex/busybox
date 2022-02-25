@@ -1,10 +1,10 @@
 val busyboxVersion: String by project
 val arch = System.getenv("ARCH") ?: "x64"
 val dockerArch = System.getenv("DOCKER_ARCH") ?: "amd64"
-val githubRunAttempt = System.getenv("GITHUB_RUN_ATTEMPT") ?: "0-SNAPSHOT"
+val githubRunNumber = System.getenv("GITHUB_RUN_NUMBER") ?: "0-SNAPSHOT"
 
 group = "io.vmify.nanoos"
-version = "${busyboxVersion}-$githubRunAttempt"
+version = "${busyboxVersion}-$githubRunNumber"
 
 plugins {
     id("maven-publish")
@@ -32,8 +32,7 @@ val archJar by tasks.registering(Jar::class) {
     dependsOn(buildBusybox)
 
     destinationDirectory.set(project.buildDir)
-    archiveBaseName.set("busybox")
-    archiveClassifier.set(arch)
+    archiveBaseName.set("busybox-$arch")
     archiveVersion.set(project.version.toString())
     from("${project.buildDir.absolutePath}/jar")
 }
