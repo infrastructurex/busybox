@@ -46,7 +46,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = java.net.URI("https://maven.pkg.github.com/vmify/nanoos")
+            url = uri("https://maven.pkg.github.com/vmify/busybox")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
