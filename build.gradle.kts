@@ -55,7 +55,7 @@ publishing {
     }
 
     publications {
-        create<MavenPublication>("Jars") {
+        create<MavenPublication>("archJar") {
             artifact(archJar)
         }
     }
