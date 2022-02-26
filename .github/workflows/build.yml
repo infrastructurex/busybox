@@ -39,6 +39,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: Download all workflow run artifacts
       uses: actions/download-artifact@v2
     - name: Prepare artifacts
@@ -46,13 +47,10 @@ jobs:
         mv $GITHUB_WORKSPACE/x64/busybox.tar.gz busybox-x64-$GITHUB_RUN_NUMBER.tar.gz
         mv $GITHUB_WORKSPACE/arm64/busybox.tar.gz busybox-arm64-$GITHUB_RUN_NUMBER.tar.gz
     - name: Tag
-      uses: rickstaa/action-create-tag@v1
+      uses: actions-ecosystem/action-push-tag@v1
       with:
         tag: ${{ github.run.number }}
         message: "v${{ env.GITHUB_RUN_NUMBER }}"
-        commit_sha: ${{ env.GITHUB_SHA }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create and upload release
       uses: ncipollo/release-action@v1
       with:
