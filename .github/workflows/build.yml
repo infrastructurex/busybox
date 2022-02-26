@@ -39,11 +39,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Tag
-      run: |
-        git tag $GITHUB_RUN_NUMBER
-        git push origin $GITHUB_RUN_NUMBER
     - name: Download all workflow run artifacts
       uses: actions/download-artifact@v2
     - name: Prepare artifacts
@@ -55,4 +50,5 @@ jobs:
       with:
         artifacts: "*.tar.gz"
         token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ env.GITHUB_RUN_NUMBER }}
+        commit: ${{ github.sha }}
+        tag: ${{ github.run.number }}
