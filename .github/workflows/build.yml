@@ -41,9 +41,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Tag
+        id: tag
         run: |
           git tag $GITHUB_RUN_NUMBER
           git push origin $GITHUB_RUN_NUMBER
+          echo "::set-output name=tag::$GITHUB_RUN_NUMBER"
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v2
       - name: Prepare artifacts
@@ -56,8 +58,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.run.number }}
-          release_name: v${{ github.run.number }}
+          tag_name: ${{ steps.tag.outputs.tag }}
+          release_name: v${{ steps.tag.outputs.tag }}
           draft: false
           prerelease: false
       - name: Upload x64
