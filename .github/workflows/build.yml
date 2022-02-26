@@ -54,8 +54,8 @@ jobs:
     - name: Prepare artifacts
       run: |
         ls -l
-        mv busybox/busybox/x64 busybox-x64-${{ steps.tag.outputs.new_tag }}.tar.gz
-        mv busybox/busybox/arm64 busybox-arm64-${{ steps.tag.outputs.new_tag }}.tar.gz
+        mv /home/runner/work/busybox/busybox/x64 busybox-x64-${{ steps.tag.outputs.new_tag }}.tar.gz
+        mv /home/runner/work/busybox/busybox/arm64 busybox-arm64-${{ steps.tag.outputs.new_tag }}.tar.gz
     - name: Create and upload release
       uses: ncipollo/release-action@v1
       with:
