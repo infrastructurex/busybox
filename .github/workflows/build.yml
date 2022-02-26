@@ -40,16 +40,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Tag
+      run: |
+        git tag $GITHUB_RUN_NUMBER
+        git push origin $GITHUB_RUN_NUMBER
     - name: Download all workflow run artifacts
       uses: actions/download-artifact@v2
     - name: Prepare artifacts
       run: |
         mv $GITHUB_WORKSPACE/x64/busybox.tar.gz busybox-x64-$GITHUB_RUN_NUMBER.tar.gz
         mv $GITHUB_WORKSPACE/arm64/busybox.tar.gz busybox-arm64-$GITHUB_RUN_NUMBER.tar.gz
-    - name: Tag
-      run: |
-        git tag $GITHUB_RUN_NUMBER
-        git push origin --tags
     - name: Create and upload release
       uses: ncipollo/release-action@v1
       with:
