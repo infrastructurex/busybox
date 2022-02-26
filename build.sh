@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+CONFIG=/build/.config
+VERSION=$(grep '# Busybox version: ' $CONFIG | cut -d ' ' -f 4)
+
 echo Downloading busybox "$VERSION" ...
 cd /build || exit
 wget https://www.busybox.net/downloads/busybox-$VERSION.tar.bz2
@@ -10,8 +13,7 @@ mv busybox-"$VERSION" busybox
 
 echo Building busybox ...
 cd /build/busybox || exit
-make defconfig
-sed -i '/# CONFIG_STATIC is not set/c\CONFIG_STATIC=y' .config
+cp $CONFIG .
 make
 
 echo Packaging busybox ...
@@ -19,3 +21,4 @@ mkdir /export
 cd /export || exit
 cp /build/busybox/busybox .
 cp /build/busybox/LICENSE .
+tar -czvf /busybox.tar.gz *
