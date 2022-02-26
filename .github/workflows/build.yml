@@ -56,8 +56,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.GITHUB_RUN_NUMBER }}
-          release_name: v${{ env.GITHUB_RUN_NUMBER }}
+          tag_name: ${{ github.run.number }}
+          release_name: v${{ github.run.number }}
           draft: false
           prerelease: false
       - name: Upload x64
