@@ -41,9 +41,6 @@ jobs:
     permissions:
       contents: write
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: '0'
     - name: Download all workflow run artifacts
       uses: actions/download-artifact@v2
     - name: Prepare artifacts
@@ -53,8 +50,9 @@ jobs:
     - name: Tag
       uses: rickstaa/action-create-tag@v1
       with:
-        tag: ${{ env.GITHUB_RUN_NUMBER }}
+        tag: "${{ env.GITHUB_RUN_NUMBER }}"
         message: "v${{ env.GITHUB_RUN_NUMBER }}"
+        commit_sha: ${{ env.GITHUB_SHA }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create and upload release
