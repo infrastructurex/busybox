@@ -62,4 +62,4 @@ jobs:
       with:
         artifacts: "*.tar.gz"
         token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ env.$GITHUB_RUN_NUMBER }}
+        tag: ${{ env.GITHUB_RUN_NUMBER }}
