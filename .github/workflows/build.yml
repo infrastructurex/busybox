@@ -45,6 +45,14 @@ jobs:
       run: |
         mv $GITHUB_WORKSPACE/x64/busybox.tar.gz busybox-x64-$GITHUB_RUN_NUMBER.tar.gz
         mv $GITHUB_WORKSPACE/arm64/busybox.tar.gz busybox-arm64-$GITHUB_RUN_NUMBER.tar.gz
+    - name: Tag
+      uses: rickstaa/action-create-tag@v1
+      with:
+        tag: ${{ github.run.number }}
+        message: "v${{ env.GITHUB_RUN_NUMBER }}"
+        commit_sha: ${{ env.GITHUB_SHA }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create and upload release
       uses: ncipollo/release-action@v1
       with:
