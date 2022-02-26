@@ -26,8 +26,7 @@ jobs:
           echo "Platforms: ${{ steps.buildx.outputs.platforms }}"
       - name: Build
         run: |
-          # docker buildx build --platform=linux/${{ matrix.docker-arch }} --output type=local,dest=build .
-          mkdir build && echo abc > build/busybox.tar.gz
+          docker buildx build --platform=linux/${{ matrix.docker-arch }} --output type=local,dest=build .
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
