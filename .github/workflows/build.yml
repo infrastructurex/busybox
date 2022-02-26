@@ -44,37 +44,37 @@ jobs:
         run: |
           git tag $GITHUB_RUN_NUMBER
           git push origin $GITHUB_RUN_NUMBER
-    - name: Download all workflow run artifacts
-      uses: actions/download-artifact@v2
-    - name: Prepare artifacts
-      run: |
-        mv x64/busybox.tar.gz busybox-x64-$GITHUB_RUN_NUMBER.tar.gz
-        mv arm64/busybox.tar.gz busybox-arm64-$GITHUB_RUN_NUMBER.tar.gz
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ env.GITHUB_RUN_NUMBER }}
-        release_name: v${{ env.GITHUB_RUN_NUMBER }}
-        draft: false
-        prerelease: false
-    - name: Upload x64
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./x64/busybox.tar.gz
-        asset_name: busybox-x64-${{ env.GITHUB_RUN_NUMBER }}.tar.gz
-        asset_content_type: application/tar+gzip
-    - name: Upload arm64
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./arm64/busybox.tar.gz
-        asset_name: busybox-arm64-${{ env.GITHUB_RUN_NUMBER }}.tar.gz
-        asset_content_type: application/tar+gzip
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v2
+      - name: Prepare artifacts
+        run: |
+          mv x64/busybox.tar.gz busybox-x64-$GITHUB_RUN_NUMBER.tar.gz
+          mv arm64/busybox.tar.gz busybox-arm64-$GITHUB_RUN_NUMBER.tar.gz
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.GITHUB_RUN_NUMBER }}
+          release_name: v${{ env.GITHUB_RUN_NUMBER }}
+          draft: false
+          prerelease: false
+      - name: Upload x64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./x64/busybox.tar.gz
+          asset_name: busybox-x64-${{ env.GITHUB_RUN_NUMBER }}.tar.gz
+          asset_content_type: application/tar+gzip
+      - name: Upload arm64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./arm64/busybox.tar.gz
+          asset_name: busybox-arm64-${{ env.GITHUB_RUN_NUMBER }}.tar.gz
+          asset_content_type: application/tar+gzip
