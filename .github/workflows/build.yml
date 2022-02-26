@@ -33,7 +33,7 @@ jobs:
         with:
           name: ${{ matrix.arch }}
           path: build/busybox.tar.gz
-          retention-days: 5
+          retention-days: 1
 
   publish:
     needs: build
@@ -49,8 +49,8 @@ jobs:
     - name: Tag
       uses: actions-ecosystem/action-push-tag@v1
       with:
-        tag: ${{ github.run.number }}
-        message: "v${{ env.GITHUB_RUN_NUMBER }}"
+        tag: $GITHUB_RUN_NUMBER
+        message: "v$GITHUB_RUN_NUMBER"
     - name: Create and upload release
       uses: ncipollo/release-action@v1
       with:
