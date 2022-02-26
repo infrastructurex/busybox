@@ -43,9 +43,8 @@ jobs:
       uses: actions/download-artifact@v2
     - name: Prepare artifacts
       run: |
-        env
-        mv /home/runner/work/busybox/busybox/x64/busybox.tar.gz busybox-x64-${{ env.GITHUB_RUN_NUMBER }}.tar.gz
-        mv /home/runner/work/busybox/busybox/arm64/busybox.tar.gz busybox-arm64-$GITHUB_RUN_NUMBER.tar.gz
+        env && mv $GITHUB_WORKSPACE/x64/busybox.tar.gz busybox-x64-$GITHUB_RUN_NUMBER.tar.gz
+        mv $GITHUB_WORKSPACE/arm64/busybox.tar.gz busybox-arm64-$GITHUB_RUN_NUMBER.tar.gz
     - name: Tag
       uses: rickstaa/action-create-tag@v1
       with:
