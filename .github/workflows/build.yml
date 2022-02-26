@@ -27,7 +27,7 @@ jobs:
       - name: Build
         run: |
           # docker buildx build --platform=linux/${{ matrix.docker-arch }} --output type=local,dest=build .
-          touch build/busybox.tar.gz
+          mkdir build && touch build/busybox.tar.gz
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
