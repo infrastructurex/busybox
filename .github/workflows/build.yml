@@ -53,8 +53,8 @@ jobs:
     - name: Tag
       uses: rickstaa/action-create-tag@v1
       with:
-        tag: ${{ env.$GITHUB_RUN_NUMBER }}
-        message: "v${{ env.$GITHUB_RUN_NUMBER }}"
+        tag: ${{ env.GITHUB_RUN_NUMBER }}
+        message: "v${{ env.GITHUB_RUN_NUMBER }}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create and upload release
