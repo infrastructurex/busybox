@@ -58,6 +58,6 @@ jobs:
     - name: Create and upload release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: busybox-x64-${{ steps.tag.outputs.new_tag }}.tar.gz,busybox-arm64-${{ steps.tag.outputs.new_tag }}.tar.gz
+        artifacts: "*.tar.gz"
         token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ steps.tag.outputs.new_tag }}
