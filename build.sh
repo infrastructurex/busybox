@@ -19,7 +19,7 @@ else
   make defconfig
   sed -i '/# CONFIG_STATIC is not set/c\CONFIG_STATIC=y' .config
 fi
-make
+make -j$(nproc)
 
 echo Packaging busybox ...
 mkdir /export
