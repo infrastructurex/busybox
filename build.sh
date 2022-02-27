@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-CONFIG=/build/.config
-VERSION=$(grep '# Busybox version: ' $CONFIG | cut -d ' ' -f 4)
+CONFIG_FILE=/build/.config
+VERSION=$(grep '# Busybox version: ' $CONFIG_FILE | cut -d ' ' -f 4)
 
 echo Downloading busybox "$VERSION" ...
 cd /build || exit
@@ -13,7 +13,12 @@ mv busybox-"$VERSION" busybox
 
 echo Building busybox ...
 cd /build/busybox || exit
-cp $CONFIG .
+if [ "$CONFIG" = "minimal" ]; then
+  cp $CONFIG_FILE .
+else
+  make defconfig
+  sed -i '/# CONFIG_STATIC is not set/c\CONFIG_STATIC=y' .config
+fi
 make
 
 echo Packaging busybox ...
