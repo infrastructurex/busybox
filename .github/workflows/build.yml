@@ -18,12 +18,6 @@ jobs:
           - arch: "arm64"
             docker-arch: "arm64"
             config: "minimal"
-          - arch: "x64"
-            docker-arch: "amd64"
-            config: "full"
-          - arch: "arm64"
-            docker-arch: "arm64"
-            config: "full"
     steps:
       - uses: actions/checkout@v2
       - name: Set up QEMU
@@ -91,22 +85,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: minimal-arm64/busybox.tar.gz
           asset_name: busybox-minimal-arm64-${{ steps.tag.outputs.tag }}.tar.gz
-          asset_content_type: application/tar+gzip
-      - name: Upload full x64
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: full-x64/busybox.tar.gz
-          asset_name: busybox-full-x64-${{ steps.tag.outputs.tag }}.tar.gz
-          asset_content_type: application/tar+gzip
-      - name: Upload full arm64
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: full-arm64/busybox.tar.gz
-          asset_name: busybox-full-arm64-${{ steps.tag.outputs.tag }}.tar.gz
           asset_content_type: application/tar+gzip
