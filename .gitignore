@@ -2,10 +2,6 @@
 *.iws
 *.iml
 /.idea/
-target
 build
-out
-.gradle
 *.gz
-*.img
 *.tar
