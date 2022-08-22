@@ -13,18 +13,22 @@ mv busybox-"$VERSION" busybox
 
 echo Building busybox ...
 cd /build/busybox || exit
-if [ "$CONFIG" = "minimal" ]; then
-  cp $CONFIG_FILE .
-else
-  make defconfig
-  sed -i '/# CONFIG_STATIC is not set/c\CONFIG_STATIC=y' .config
-fi
+cp $CONFIG_FILE .
 make -j$(nproc) || exit
 
 echo Packaging busybox ...
-mkdir /export
-cd /export || exit
-cp /build/busybox/busybox .
+mkdir -p /export/busybox
+cd /export/busybox || exit
+
+mkdir sbin
+mkdir bin
+mkdir -p usr/sbin
+mkdir usr/bin
+cp /build/busybox/busybox bin
+chroot . /bin/busybox --install -s
+ln -s /sbin/init init
+
+cd ..
 cp /build/busybox/LICENSE .
 
 tar -czvf /busybox.tar.gz *

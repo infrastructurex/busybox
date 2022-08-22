@@ -14,10 +14,8 @@ jobs:
         include:
           - arch: "x64"
             docker-arch: "amd64"
-            config: "minimal"
           - arch: "arm64"
             docker-arch: "arm64"
-            config: "minimal"
     steps:
       - uses: actions/checkout@v2
       - name: Set up QEMU
@@ -34,11 +32,11 @@ jobs:
           echo "Platforms: ${{ steps.buildx.outputs.platforms }}"
       - name: Build
         run: |
-          docker buildx build --build-arg CONFIG=${{ matrix.config }} --platform=linux/${{ matrix.docker-arch }} --output type=local,dest=build .
+          docker buildx build --platform=linux/${{ matrix.docker-arch }} --output type=local,dest=build .
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.config }}-${{ matrix.arch }}
+          name: ${{ matrix.arch }}
           path: build/busybox.tar.gz
           retention-days: 1
 
@@ -68,21 +66,21 @@ jobs:
           release_name: ${{ steps.tag.outputs.tag }}
           draft: false
           prerelease: false
-      - name: Upload minimal x64
+      - name: Upload x64
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: minimal-x64/busybox.tar.gz
-          asset_name: busybox-minimal-x64-${{ steps.tag.outputs.tag }}.tar.gz
+          asset_path: x64/busybox.tar.gz
+          asset_name: busybox-x64-${{ steps.tag.outputs.tag }}.tar.gz
           asset_content_type: application/tar+gzip
-      - name: Upload minimal arm64
+      - name: Upload arm64
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: minimal-arm64/busybox.tar.gz
-          asset_name: busybox-minimal-arm64-${{ steps.tag.outputs.tag }}.tar.gz
+          asset_path: arm64/busybox.tar.gz
+          asset_name: busybox-arm64-${{ steps.tag.outputs.tag }}.tar.gz
           asset_content_type: application/tar+gzip
