@@ -2,10 +2,11 @@
 
 CONFIG_FILE=/build/.config
 VERSION=$(grep '# Busybox version: ' $CONFIG_FILE | cut -d ' ' -f 4)
+SOURCE=https://www.busybox.net/downloads/busybox-$VERSION.tar.bz2
 
 echo Downloading busybox "$VERSION" ...
 cd /build || exit
-wget https://www.busybox.net/downloads/busybox-$VERSION.tar.bz2
+wget "$SOURCE"
 
 echo Extracting busybox "$VERSION" ...
 tar -xf busybox-"$VERSION".tar.bz2
@@ -30,5 +31,8 @@ ln -s /sbin/init init
 
 cd ..
 cp /build/busybox/LICENSE .
+echo "Source  : $SOURCE" > /export/SOURCE
+echo "Version : $VERSION" >> /export/SOURCE
+echo "Package : https://github.com/vmify/busybox/releases/download/$TAG/busybox-$ARCH-$TAG.tar.gz" >> /export/SOURCE
 
 tar -czvf /busybox.tar.gz *
