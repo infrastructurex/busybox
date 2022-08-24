@@ -1,5 +1,7 @@
 FROM alpine:3.16.1 AS build
 
+ARG ARCH
+ENV ARCH=$ARCH
 ARG TAG
 ENV TAG=$TAG
 
