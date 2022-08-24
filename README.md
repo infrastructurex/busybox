@@ -1,5 +1,5 @@
 # busybox
-Busybox build for [VMify NanoOS](https://github.com/vmify/nanoos)
+Busybox build for [VMify](https://github.com/vmify/vmify)
 
 ## License
 Copyright 2022 Axel Fontaine Labs GmbH
