@@ -15,7 +15,7 @@ mv busybox-"$VERSION" busybox
 echo Building busybox ...
 cd /build/busybox || exit
 cp $CONFIG_FILE .
-make -j$(nproc) || exit
+make "-j$(nproc)" || exit
 
 echo Packaging busybox ...
 mkdir -p /export/busybox
