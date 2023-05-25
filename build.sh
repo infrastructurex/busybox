@@ -18,21 +18,32 @@ cp $CONFIG_FILE .
 make "-j$(nproc)" || exit
 
 echo Packaging busybox ...
-mkdir -p /export/busybox
-cd /export/busybox || exit
+mkdir /export
+cd /export || exit
 
 mkdir sbin
 mkdir bin
 mkdir -p usr/sbin
 mkdir usr/bin
 cp /build/busybox/busybox bin
+
+mkdir lib
+cp /lib/ld* lib
+cp /lib/libc* lib
 chroot . /bin/busybox --install -s
+rm -r lib
+
 ln -s /sbin/init init
 
-cd ..
-cp /build/busybox/LICENSE .
-echo "Source  : $SOURCE" > /export/SOURCE
-echo "Version : $VERSION" >> /export/SOURCE
-echo "Package : https://github.com/vmify/busybox/releases/download/$TAG/busybox-$ARCH-$TAG.tar.gz" >> /export/SOURCE
+mkdir legal
+cat > legal/busybox<< EOF
+Source  : $SOURCE
+Version : $VERSION
+Package : https://github.com/vmify/busybox/releases/download/$TAG/busybox-$ARCH-$TAG.tar.gz
+License :
+
+EOF
+cat /build/busybox/LICENSE >> legal/busybox
+gzip legal/busybox
 
 tar -czvf /busybox.tar.gz *
