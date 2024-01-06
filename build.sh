@@ -39,7 +39,7 @@ mkdir legal
 cat > legal/busybox<< EOF
 Source  : $SOURCE
 Version : $VERSION
-Package : https://github.com/vmify/busybox/releases/download/$TAG/busybox-$ARCH-$TAG.tar.gz
+Package : https://github.com/infrastructurex/busybox/releases/download/$TAG/busybox-$ARCH-$TAG.tar.gz
 License :
 
 EOF
