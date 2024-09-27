@@ -1,4 +1,4 @@
-FROM alpine:3.18.0 AS build
+FROM alpine:3.20.0 AS build
 
 ARG ARCH
 ENV ARCH=$ARCH
