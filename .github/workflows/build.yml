@@ -6,6 +6,7 @@ on:
       - 'build.sh'
       - 'busybox.config'
       - 'Dockerfile'
+      - '*.cmd'
 jobs:
   build:
     strategy:
@@ -19,7 +20,7 @@ jobs:
             os: ubuntu-24.04-arm
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -47,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Tag
         id: tag
         env:
